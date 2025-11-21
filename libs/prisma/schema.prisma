@@ -1,41 +1,55 @@
-generator client {
-  provider = "prisma-client-js"
-  output   = "../client"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  forms     Form[]
-}
-
-model Form {
-  id          String    @id @default(cuid())
-  user        User      @relation(fields: [userId], references: [id])
-  userId      String
-  title       String
-  slug        String    @unique
-  schemaJson  String    // JSON string of form schema
-  createdAt   DateTime  @default(now())
-  bookings    Booking[]
-}
-
-model Booking {
-  id         String   @id @default(cuid())
-  form       Form     @relation(fields: [formId], references: [id])
-  formId     String
-  name       String
-  email      String
-  phone      String?
-  dataJson   String   // Additional answers
-  slot       DateTime
+generator client { provider = "prisma-client-js" }
+  slotStart  DateTime
+  slotEnd    DateTime
   status     String   @default("pending")
+  payment    Payment?
   createdAt  DateTime @default(now())
+}
+
+model AvailabilityRule {
+  id          String   @id @default(cuid())
+  org         Organization @relation(fields: [orgId], references: [id])
+  orgId       String
+  weekday     Int      // 0-6 (Mon-Sun) or 0-Sun depending on choice
+  startTime   String   // "09:00"
+  endTime     String   // "17:00"
+  durationMin Int
+}
+
+model BlockedDate {
+  id        String   @id @default(cuid())
+  org       Organization @relation(fields: [orgId], references: [id])
+  orgId     String
+  date      DateTime
+  reason    String?
+}
+
+model Payment {
+  id           String   @id @default(cuid())
+  booking      Booking? @relation(fields: [bookingId], references: [id])
+  bookingId    String?
+  provider     String   // stripe/paystack/flutterwave
+  providerId   String?  // provider charge id / session id
+  amountCents  Int
+  currency     String  @default("USD")
+  status       String  @default("pending")
+  createdAt    DateTime @default(now())
+}
+
+model WebhookSubscription {
+  id          String @id @default(cuid())
+  org         Organization @relation(fields: [orgId], references: [id])
+  orgId       String
+  url         String
+  events      String // JSON array
+  createdAt   DateTime @default(now())
+}
+
+model NotificationLog {
+  id        String @id @default(cuid())
+  orgId     String
+  type      String
+  payload   String
+  status    String
+  createdAt DateTime @default(now())
 }
