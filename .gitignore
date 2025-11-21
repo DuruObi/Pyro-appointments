@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.*
+/dist
+/.next
+/.idea
+.vscode/
+.DS_Store
+coverage/
+credentials.json
