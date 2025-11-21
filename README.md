@@ -78,7 +78,7 @@ Follow these steps to run the project locally (MVP setup):
 1. Clone the repo:
 
 ```bash
-git clone https://github.com/your-username/pyro-appointments.git
+git clone https://DuruObi/pyro-appointments.git
 cd pyro-appointments
 ```
 
@@ -139,18 +139,6 @@ The `POST /forms/:id/submit` endpoint validates availability and creates a booki
 
 ---
 
-## UI / UX Notes
-
-* Make the public booking form extremely lightweight (one JS bundle) so it loads fast when embedded in other sites.
-* Provide an `iframe` embed snippet as well as a plain link. Example embed:
-
-```html
-<iframe src="https://pyro.example.com/f/abcd1234" width="100%" height="700" frameborder="0"></iframe>
-```
-
-* Implement client-side validation + server-side validation (canonical source of truth).
-
----
 
 ## Roadmap (next milestones)
 
@@ -161,23 +149,9 @@ The `POST /forms/:id/submit` endpoint validates availability and creates a booki
 5. Multi-user organizations & team scheduling
 6. Analytics dashboard (conversion, busiest slots)
 
----
-
-## Contributing
-
-1. Fork the repo
-2. Create a feature branch `feature/your-feature`
-3. Commit tests + code
-4. Open a pull request with a clear description
 
 ---
 
 ## License
 
-MIT © Your Name / Your Company
-
----
-
-## Contact
-
-If you want help implementing the above or generating the starter code (frontend + backend), tell me and I will scaffold the project files and key modules next.
+MIT © Obinna Emmanuel Duru / 3878OED DIGITAL
